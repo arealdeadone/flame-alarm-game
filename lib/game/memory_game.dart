@@ -18,10 +18,11 @@ class MemoryGame extends FlameGame {
   FutureOr<void> onLoad() async {
     await Flame.images.load('memory-game-sprite.png');
 
-    final random = Random();
+    final faceIndices = [...List.generate(8, (i) => i), ...List.generate(8, (i) => i)]
+      ..shuffle(Random());
     final memoryCards = List.generate(
       16,
-      (i) => MemoryCard(random.nextInt(9))
+      (i) => MemoryCard(faceIndices[i])
         ..size = cardSize
         ..position = Vector2(
           cardGap + i % 4 * (cardGap + cardWidth),

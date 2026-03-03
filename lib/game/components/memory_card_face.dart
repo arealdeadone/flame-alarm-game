@@ -5,7 +5,9 @@ import 'package:flutter/foundation.dart';
 @immutable
 class MemoryCardFace {
   factory MemoryCardFace.fromInt(int index) {
-    assert(index >= 0 && index <= 9);
+    if (index < 0 || index >= _singletons.length) {
+      throw RangeError.range(index, 0, _singletons.length - 1, 'index');
+    }
     return _singletons[index];
   }
 
