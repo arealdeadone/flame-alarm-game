@@ -1,4 +1,6 @@
 import 'dart:async';
+import 'dart:math';
+import 'dart:ui';
 
 import 'package:flame/components.dart';
 import 'package:flame/flame.dart';
@@ -16,29 +18,29 @@ class MemoryGame extends FlameGame {
   FutureOr<void> onLoad() async {
     await Flame.images.load('memory-game-sprite.png');
 
+    final random = Random();
     final memoryCards = List.generate(
       16,
-      (i) => MemoryCard()
-              ..size = cardSize
-              ..position = Vector2(
-                cardGap + i % 4 * (cardGap + cardWidth),
-                cardGap + (i ~/ 4) * (cardGap + cardHeight) 
-              )
+      (i) => MemoryCard(random.nextInt(9))
+        ..size = cardSize
+        ..position = Vector2(
+          cardGap + i % 4 * (cardGap + cardWidth),
+          cardGap + (i ~/ 4) * (cardGap + cardHeight),
+        ),
     );
 
     world.addAll(memoryCards);
     camera.viewfinder.visibleGameSize = Vector2(
-      (5*cardGap + 4*cardWidth),
-      (5*cardGap + 4*cardHeight)
+      (5 * cardGap + 4 * cardWidth),
+      (5 * cardGap + 4 * cardHeight),
     );
 
     camera.viewfinder.position = Vector2(
-      (2.5*cardGap + 2*cardWidth),
-      (2.5*cardGap + 2*cardHeight)
+      (2.5 * cardGap + 2 * cardWidth),
+      (2.5 * cardGap + 2 * cardHeight),
     );
 
     camera.viewfinder.anchor = Anchor.center;
-  
   }
 }
 
